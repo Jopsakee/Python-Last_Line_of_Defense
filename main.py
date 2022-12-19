@@ -94,8 +94,18 @@ class Player(Ship):
                     #Remove enemy ship and laser from game if it is hit by the player
                     if laser.collision(object):
                         objects.remove(object)
-                        self.lasers.remove(laser)
+                        if laser in self.lasers:
+                            self.lasers.remove(laser)
 
+    def draw(self, windowBar):
+        super().draw(windowBar)
+        self.healthbar(windowBar)
+
+    def healthbar(self, windowBar):
+        # Red part of health bar(missing health)
+        pygame.draw.rect(windowBar, (255, 0, 0), (self.x, self.y + self.shipImage.get_height() + 10, self.shipImage.get_width(), 10))
+        # Green part of healthbar
+        pygame.draw.rect(windowBar, (0, 255, 0), (self.x, self.y + self.shipImage.get_height() + 10, self.shipImage.get_width() * (self.health/self.maxHealth), 10))
 # Enemy ships
 class Enemy(Ship):
     shipColor_Map = {
@@ -111,6 +121,12 @@ class Enemy(Ship):
     
     def moveDown(self, velocity):
         self.y += velocity
+    
+    def shoot(self):
+        if self.laserCooldown == 0:
+            laser = Laser(self.x-15, self.y, self.laserImage)
+            self.lasers.append(laser)
+            self.laserCooldown = 1
 # Laser projectiles
 class Laser:
     def __init__(self, x, y, laserImage):
@@ -149,7 +165,8 @@ def main():
     level = 0
     player_velocity = 2.5
     enemy_velocity = 0.5
-    laser_velocity = 3.5
+    laser_velocity_enemy = 1
+    laser_velocity_player = -3.5
     textFont = pygame.font.SysFont("comicsans", 20)
     player = Player(300, 650)
     enemies = []
@@ -212,20 +229,40 @@ def main():
             player.x += player_velocity
         if keys[pygame.K_w] and player.y - player_velocity > 0: #Move up
             player.y -= player_velocity
-        if keys[pygame.K_s] and player.y + player_velocity + player.getHeight() < window_HEIGHT: #Move down
+        if keys[pygame.K_s] and player.y + player_velocity + player.getHeight() + 20 < window_HEIGHT: #Move down
             player.y += player_velocity
         if keys[pygame.K_SPACE]:
             player.shoot()
 
-        #Let enemies move down with specified velocity
+        # Enemy behaviour
         for enemy in enemies[:]:
             enemy.moveDown(enemy_velocity)
-            enemy.move_lasers(laser_velocity, player)
+            enemy.move_lasers(laser_velocity_enemy, player)
+            # Enemies shoot randomly
+            if random.randrange(0, 2*framesPerSecond) == 1:
+                enemy.shoot()
+            if collide(enemy, player):
+                player.health -= 10
+                enemies.remove(enemy)
             #If the enemies reach the bottom, lose a life
-            if enemy.y + enemy.getHeight() > window_HEIGHT:
+            elif enemy.y + enemy.getHeight() > window_HEIGHT:
                 lives -= 1
                 enemies.remove(enemy)
         
-        player.move_lasers(-laser_velocity, enemies)
+        player.move_lasers(laser_velocity_player, enemies)
+def main_menu():
+    titleFont = pygame.font.SysFont("comicsans", 70)
+    run = True
+    while run:
+        WINDOW.blit(BACKGROUND, (0,0))
+        title_text = titleFont.render("Click to begin...", 1, (255,255,255))
+        WINDOW.blit(title_text, (window_WIDTH/2 - title_text.get_width()/2, 350))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                main()
+    pygame.quit()
 
-main()
+main_menu()
