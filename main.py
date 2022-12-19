@@ -5,12 +5,12 @@ import random
 pygame.font.init()
 
 # Window initialisation
-window_WIDTH, window_HEIGHT = 750, 750
+window_WIDTH, window_HEIGHT = 1000, 1000
 WINDOW = pygame.display.set_mode((window_WIDTH, window_HEIGHT))
 pygame.display.set_caption("Last Line of Defense")
 
 # Background image
-BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background-black.png")),(window_WIDTH, window_HEIGHT))
+BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("assets/Blue Nebula", "Blue_Nebula_01-1024x1024.png")),(window_WIDTH, window_HEIGHT))
 
 # Load alien ship asset images
 ALIEN_GREEN = pygame.image.load(os.path.join("assets", "pixel_ship_green_small.png"))
@@ -159,16 +159,15 @@ def main():
     run = True
     lost = False
     lostTime = 0
-    gameOverFont = pygame.font.SysFont("comicsans", 80)
+    gameOverFont = pygame.font.Font(os.path.join("fonts", "Reboot Crush.ttf"), 15)
     framesPerSecond = 144
     lives = 3
     level = 0
-    player_velocity = 2.5
+    player_velocity = 2
     enemy_velocity = 0.5
     laser_velocity_enemy = 1
     laser_velocity_player = -3.5
-    textFont = pygame.font.SysFont("comicsans", 20)
-    player = Player(300, 650)
+    player = Player(450, 700)
     enemies = []
     enemyPerWave = 5
     clock = pygame.time.Clock()
@@ -177,10 +176,10 @@ def main():
         # Set background image at top left corner
         WINDOW.blit(BACKGROUND,(0,0))
         # Render text
-        lives_text = textFont.render(f"Lives: {lives}", 1, (0,255,0))
-        level_text = textFont.render(f"Level: {level}", 1, (0,0,255))
-        WINDOW.blit(lives_text, (window_WIDTH-level_text.get_width() - 20, 670))
-        WINDOW.blit(level_text, (window_WIDTH-level_text.get_width() - 20, 700))
+        lives_text = gameOverFont.render(f"Lives: {lives}", 1, (0,255,0))
+        level_text = gameOverFont.render(f"Level: {level}", 1, (255,255,255))
+        WINDOW.blit(lives_text, (window_WIDTH-level_text.get_width() - 20, 920))
+        WINDOW.blit(level_text, (window_WIDTH-level_text.get_width() - 20, 950))
 
         for enemy in enemies:
             enemy.draw(WINDOW)
@@ -239,7 +238,7 @@ def main():
             enemy.moveDown(enemy_velocity)
             enemy.move_lasers(laser_velocity_enemy, player)
             # Enemies shoot randomly
-            if random.randrange(0, 2*framesPerSecond) == 1:
+            if random.randrange(0, 5*framesPerSecond) == 1:
                 enemy.shoot()
             if collide(enemy, player):
                 player.health -= 10
@@ -251,12 +250,14 @@ def main():
         
         player.move_lasers(laser_velocity_player, enemies)
 def main_menu():
-    titleFont = pygame.font.SysFont("comicsans", 70)
+    titleFont = pygame.font.Font(os.path.join("fonts", "THE SOLSTICE.ttf"), 25)
     run = True
     while run:
         WINDOW.blit(BACKGROUND, (0,0))
-        title_text = titleFont.render("Click to begin...", 1, (255,255,255))
-        WINDOW.blit(title_text, (window_WIDTH/2 - title_text.get_width()/2, 350))
+        title_text = titleFont.render("Last Line of Defense", 1, 'yellow')
+        instruction_text = titleFont.render("Click to play...", 1, 'white')
+        WINDOW.blit(title_text, (window_WIDTH/2 - title_text.get_width()/2, 120))
+        WINDOW.blit(instruction_text, (window_WIDTH/2 - instruction_text.get_width()/2, 800))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
