@@ -77,31 +77,46 @@ gameOverSound = mixer.Sound(os.path.join(
                 "audio", "gameOver.wav"))
 
 # Load alien ship asset images
-ALIEN_GREEN = pygame.image.load(os.path.join(
-    "assets", "pixel_ship_green_small.png"))
-ALIEN_RED = pygame.image.load(os.path.join(
-    "assets", "pixel_ship_red_small.png"))
-ALIEN_BLUE = pygame.image.load(os.path.join(
-    "assets", "pixel_ship_blue_small.png"))
+ALIEN_GREEN1 = pygame.image.load(os.path.join(
+    "assets/aliens", "aliengreen1.png"))
+ALIEN_RED1 = pygame.image.load(os.path.join(
+    "assets/aliens", "alienred1.png"))
+ALIEN_RED2 = pygame.image.load(os.path.join(
+    "assets/aliens", "alienred2.png"))
+ALIEN_CYAN1 = pygame.image.load(os.path.join(
+    "assets/aliens", "aliencyan1.png"))
+ALIEN_YELLOW1 = pygame.image.load(os.path.join(
+    "assets/aliens", "alienyellow1.png"))
+ALIEN_BOSS = pygame.image.load(os.path.join(
+    "assets/aliens", "alienBoss.png"))
+ALIEN_BLUE1 = pygame.image.load(os.path.join(
+    "assets/aliens", "alienblue1.png"))
+ALIEN_PURPLE1 = pygame.image.load(os.path.join(
+    "assets/aliens", "alienpurple1.png"))
+ALIEN_PURPLE2 = pygame.image.load(os.path.join(
+    "assets/aliens", "alienpurple2.png"))
 
 # Load player ship asset image
 PLAYER_SHIP = pygame.image.load(
-    os.path.join("assets", "shipFullHealth.png"))
+    os.path.join("assets/player", "shipFullHealth.png"))
 PLAYER_SHIP_SLIGHTDAMAGE = pygame.image.load(
-    os.path.join("assets", "shipSlightDamage.png"))
+    os.path.join("assets/player", "shipSlightDamage.png"))
 PLAYER_SHIP_DAMAGED = pygame.image.load(
-    os.path.join("assets", "shipDamaged.png"))
+    os.path.join("assets/player", "shipDamaged.png"))
 PLAYER_SHIP_VERYDAMAGED = pygame.image.load(
-    os.path.join("assets", "shipVeryDamaged.png"))
-ENGINE_SHIP = pygame.image.load(os.path.join("assets", "shipEngine.png"))
+    os.path.join("assets/player", "shipVeryDamaged.png"))
+ENGINE_SHIP = pygame.image.load(os.path.join("assets/player", "shipEngine.png"))
 
 # Load laser asset images
 GREEN_LASER = pygame.image.load(
-    os.path.join("assets", "pixel_laser_green.png"))
-RED_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_red.png"))
-BLUE_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_blue.png"))
+    os.path.join("assets/lasers", "greenlaser.png"))
+RED_LASER = pygame.image.load(os.path.join("assets/lasers", "redlaser.png"))
+BLUE_LASER = pygame.image.load(os.path.join("assets/lasers", "bluelaser.png"))
+YELLOW_LASER = pygame.image.load(os.path.join("assets/lasers", "yellowlaser.png"))
+PURPLE_LASER = pygame.image.load(os.path.join("assets/lasers", "purplelaser.png"))
+PURPLE_BULLET = pygame.image.load(os.path.join("assets/lasers", "alienbullet.png"))
 PLAYER_LASER = pygame.image.load(
-    os.path.join("assets", "bullet.png"))
+    os.path.join("assets/lasers", "bullet.png"))
 
 # Super class ship for both player and enemy
 
@@ -182,12 +197,12 @@ class Player(Ship):
         self.idleEngineSprites = []
         self.moveEngineSprites = []
         self.is_moving = False
-        self.idleEngineSprites.append(pygame.image.load(os.path.join("assets", "idle1.png")))
-        self.idleEngineSprites.append(pygame.image.load(os.path.join("assets", "idle2.png")))
-        self.idleEngineSprites.append(pygame.image.load(os.path.join("assets", "idle3.png")))
-        self.moveEngineSprites.append(pygame.image.load(os.path.join("assets", "moving1.png")))
-        self.moveEngineSprites.append(pygame.image.load(os.path.join("assets", "moving2.png")))
-        self.moveEngineSprites.append(pygame.image.load(os.path.join("assets", "moving3.png")))
+        self.idleEngineSprites.append(pygame.image.load(os.path.join("assets/player", "idle1.png")))
+        self.idleEngineSprites.append(pygame.image.load(os.path.join("assets/player", "idle2.png")))
+        self.idleEngineSprites.append(pygame.image.load(os.path.join("assets/player", "idle3.png")))
+        self.moveEngineSprites.append(pygame.image.load(os.path.join("assets/player", "moving1.png")))
+        self.moveEngineSprites.append(pygame.image.load(os.path.join("assets/player", "moving2.png")))
+        self.moveEngineSprites.append(pygame.image.load(os.path.join("assets/player", "moving3.png")))
         self.currentengineSprite = 0
         self.engineTrailSprite = self.idleEngineSprites[self.currentengineSprite]
         
@@ -254,9 +269,15 @@ class Player(Ship):
 # Enemy ships
 class Enemy(Ship):
     shipColor_Map = {
-        "red": (ALIEN_RED, RED_LASER),
-        "green": (ALIEN_GREEN, GREEN_LASER),
-        "blue": (ALIEN_BLUE, BLUE_LASER)
+        "red1": (ALIEN_RED1, RED_LASER),
+        "red2": (ALIEN_RED2, RED_LASER),
+        "green1": (ALIEN_GREEN1, GREEN_LASER),
+        "blue1": (ALIEN_BLUE1, BLUE_LASER),
+        "cyan1": (ALIEN_CYAN1, BLUE_LASER),
+        "yellow1": (ALIEN_YELLOW1, YELLOW_LASER),
+        "purple1": (ALIEN_PURPLE1, PURPLE_BULLET),
+        "purple2": (ALIEN_PURPLE2, PURPLE_LASER),
+        "boss": (ALIEN_BOSS, RED_LASER)
     }
 
     def __init__(self, x, y, color, health=100):
@@ -270,7 +291,7 @@ class Enemy(Ship):
 
     def shoot(self):
         if self.laserCooldown == 0:
-            laser = Laser(self.x-15, self.y, self.laserImage)
+            laser = Laser(self.x+23, self.y+50, self.laserImage)
             self.lasers.append(laser)
             self.laserCooldown = 1
 # Laser projectiles
@@ -415,7 +436,7 @@ def main():
             # Spawn enemies
             for i in range(enemyPerWave):
                 enemy = Enemy(random.randrange(50, window_WIDTH-100),
-                              random.randrange(-1750, -100), random.choice(["red", "blue", "green"]))
+                              random.randrange(-1750, -100), random.choice(["red1", "red2", "yellow1", "purple1", "purple2" , "blue1", "green1"]))
                 enemies.append(enemy)
                 
 
