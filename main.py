@@ -20,7 +20,8 @@ PLAYER_SHIP_DAMAGED = pygame.image.load(
     os.path.join("assets/player", "shipDamaged.png"))
 PLAYER_SHIP_VERYDAMAGED = pygame.image.load(
     os.path.join("assets/player", "shipVeryDamaged.png"))
-ENGINE_SHIP = pygame.image.load(os.path.join("assets/player", "shipEngine.png"))
+ENGINE_SHIP = pygame.image.load(
+    os.path.join("assets/player", "shipEngine.png"))
 
 # Set game icon
 pygame.display.set_icon(PLAYER_SHIP)
@@ -82,17 +83,17 @@ BACKGROUNDL24 = pygame.transform.scale(pygame.image.load(os.path.join(
 mixer.music.load(os.path.join("audio", "background.wav"))
 mixer.music.play(-1)
 enemyKilledSound = mixer.Sound(os.path.join(
-                "audio", "enemyKilled.wav"))
+    "audio", "enemyKilled.wav"))
 bulletSound = mixer.Sound(os.path.join(
-                "audio", "bullet.wav"))
+    "audio", "bullet.wav"))
 lifeLostSound = mixer.Sound(os.path.join(
-                "audio", "lifeLost.wav"))
+    "audio", "lifeLost.wav"))
 gameOverSound = mixer.Sound(os.path.join(
-                "audio", "gameOver.wav"))
+    "audio", "gameOver.wav"))
 powerUpSound = mixer.Sound(os.path.join(
-                "audio", "powerUp.wav"))
+    "audio", "powerUp.wav"))
 winSound = mixer.Sound(os.path.join(
-                "audio", "win.wav"))
+    "audio", "win.wav"))
 
 
 # Load alien ship asset images
@@ -120,21 +121,29 @@ GREEN_LASER = pygame.image.load(
     os.path.join("assets/lasers", "greenlaser.png"))
 RED_LASER = pygame.image.load(os.path.join("assets/lasers", "redlaser.png"))
 BLUE_LASER = pygame.image.load(os.path.join("assets/lasers", "bluelaser.png"))
-YELLOW_LASER = pygame.image.load(os.path.join("assets/lasers", "yellowlaser.png"))
-PURPLE_LASER = pygame.image.load(os.path.join("assets/lasers", "purplelaser.png"))
-PURPLE_BULLET = pygame.image.load(os.path.join("assets/lasers", "alienbullet.png"))
+YELLOW_LASER = pygame.image.load(
+    os.path.join("assets/lasers", "yellowlaser.png"))
+PURPLE_LASER = pygame.image.load(
+    os.path.join("assets/lasers", "purplelaser.png"))
+PURPLE_BULLET = pygame.image.load(
+    os.path.join("assets/lasers", "alienbullet.png"))
 PLAYER_LASER = pygame.image.load(
     os.path.join("assets/lasers", "bullet.png"))
 
 # Power ups images
-HEALTH_POWER = pygame.image.load(os.path.join("assets/powerups", "healthPower.png"))
-DAMAGE_POWER = pygame.image.load(os.path.join("assets/powerups", "damagePower.png"))
-COOLDOWN_POWER = pygame.image.load(os.path.join("assets/powerups", "cooldownPower.png"))
+HEALTH_POWER = pygame.image.load(
+    os.path.join("assets/powerups", "healthPower.png"))
+DAMAGE_POWER = pygame.image.load(
+    os.path.join("assets/powerups", "damagePower.png"))
+COOLDOWN_POWER = pygame.image.load(
+    os.path.join("assets/powerups", "cooldownPower.png"))
 
 # Super class ship for both player and enemy
 
+
 class Ship:
     COOLDOWN = 30
+
     def __init__(self, x, y, health):
         self.x = x
         self.y = y
@@ -147,6 +156,7 @@ class Ship:
         self.lives = 3
         self.hit = 0
     # Draw player and enemy ships
+
     def draw(self, window):
         window.blit(self.shipImage, (self.x, self.y))
         for laser in self.lasers:
@@ -173,11 +183,11 @@ class Ship:
                 self.lasers.remove(laser)
             elif laser.collision(object):
                 object.health -= 25
-                if(object.health < 100 and object.health >= 75):
+                if (object.health < 100 and object.health >= 75):
                     object.shipImage = PLAYER_SHIP_SLIGHTDAMAGE
-                elif(object.health < 75 and object.health >= 50):
+                elif (object.health < 75 and object.health >= 50):
                     object.shipImage = PLAYER_SHIP_DAMAGED
-                elif(object.health < 50 and object.health > 0):
+                elif (object.health < 50 and object.health > 0):
                     object.shipImage = PLAYER_SHIP_VERYDAMAGED
                 else:
                     object.lives -= 1
@@ -192,7 +202,7 @@ class Ship:
 
     def getHeight(self):
         return self.shipImage.get_height()
-    
+
 
 # Player ship
 
@@ -200,6 +210,7 @@ class Ship:
 class Player(Ship):
     DEPLETIOND = 25
     DEPLETIONC = 50
+
     def __init__(self, x, y, health=100):
         super().__init__(x, y, health)
         self.shipImage = PLAYER_SHIP
@@ -216,15 +227,20 @@ class Player(Ship):
         self.moveEngineSprites = []
         self.maxHealth = health
         self.is_moving = False
-        self.idleEngineSprites.append(pygame.image.load(os.path.join("assets/player", "idle1.png")))
-        self.idleEngineSprites.append(pygame.image.load(os.path.join("assets/player", "idle2.png")))
-        self.idleEngineSprites.append(pygame.image.load(os.path.join("assets/player", "idle3.png")))
-        self.moveEngineSprites.append(pygame.image.load(os.path.join("assets/player", "moving1.png")))
-        self.moveEngineSprites.append(pygame.image.load(os.path.join("assets/player", "moving2.png")))
-        self.moveEngineSprites.append(pygame.image.load(os.path.join("assets/player", "moving3.png")))
+        self.idleEngineSprites.append(pygame.image.load(
+            os.path.join("assets/player", "idle1.png")))
+        self.idleEngineSprites.append(pygame.image.load(
+            os.path.join("assets/player", "idle2.png")))
+        self.idleEngineSprites.append(pygame.image.load(
+            os.path.join("assets/player", "idle3.png")))
+        self.moveEngineSprites.append(pygame.image.load(
+            os.path.join("assets/player", "moving1.png")))
+        self.moveEngineSprites.append(pygame.image.load(
+            os.path.join("assets/player", "moving2.png")))
+        self.moveEngineSprites.append(pygame.image.load(
+            os.path.join("assets/player", "moving3.png")))
         self.currentengineSprite = 0
         self.engineTrailSprite = self.idleEngineSprites[self.currentengineSprite]
-        
 
     def move_lasers(self, velocity, objects):
         self.cooldown()
@@ -237,18 +253,18 @@ class Player(Ship):
                     # Remove enemy ship and laser from game if it is hit by the player
                     if laser.collision(object):
                         object.health -= 50
-                        object.hit+=1
-                        if(object.health <= 0):
+                        object.hit += 1
+                        if (object.health <= 0):
                             self.kills += 1
                             enemyKilledSound.play()
                             self.untilNextLevel -= 1
-                            if(object.maxHealth == 100):
+                            if (object.maxHealth == 100):
                                 self.score += object.maxHealth
-                            elif(object.maxHealth == 500):
+                            elif (object.maxHealth == 500):
                                 self.score += object.maxHealth
                             else:
                                 self.score += object.maxHealth
-                            objects.remove(object)  
+                            objects.remove(object)
                         if laser in self.lasers:
                             self.lasers.remove(laser)
 
@@ -262,7 +278,7 @@ class Player(Ship):
     def moving(self):
         self.is_moving = True
         self.engineTrailSprite = self.moveEngineSprites[self.currentengineSprite]
-    
+
     def idle(self):
         self.is_moving = False
         self.engineTrailSprite = self.idleEngineSprites[self.currentengineSprite]
@@ -274,7 +290,7 @@ class Player(Ship):
         # Green part of healthbar
         pygame.draw.rect(windowBar, (0, 255, 0), (self.x, self.y + self.shipImage.get_height() +
                          10, self.shipImage.get_width() * (self.health/self.maxHealth), 10))
-    
+
     def update(self):
         if self.is_moving == True:
             self.currentengineSprite += 1
@@ -294,10 +310,10 @@ class Player(Ship):
                 self.lasers.append(laser)
                 self.laserCooldown = 1
                 bulletSound.play()
-                if(self.halfCooldown == True):
+                if (self.halfCooldown == True):
                     self.COOLDOWN = 10
-                    self.DEPLETIONC-=1
-                    if(self.DEPLETIONC<=0):
+                    self.DEPLETIONC -= 1
+                    if (self.DEPLETIONC <= 0):
                         self.halfCooldown = False
                         self.COOLDOWN = 30
                         self.DEPLETIONC = 50
@@ -312,18 +328,20 @@ class Player(Ship):
                 bulletSound.play()
                 bulletSound.play()
                 self.DEPLETIOND -= 1
-                if(self.DEPLETIOND <= 0):
+                if (self.DEPLETIOND <= 0):
                     self.doubleLaser = False
                     self.DEPLETIOND = 25
-                if(self.halfCooldown == True):
+                if (self.halfCooldown == True):
                     self.COOLDOWN = 10
-                    self.DEPLETIONC-=1
-                    if(self.DEPLETIONC<=0):
+                    self.DEPLETIONC -= 1
+                    if (self.DEPLETIONC <= 0):
                         self.halfCooldown = False
                         self.COOLDOWN = 30
                         self.DEPLETIONC = 50
 
 # Enemy ships
+
+
 class Enemy(Ship):
     shipColor_Map = {
         "red1": (ALIEN_RED1, RED_LASER),
@@ -343,12 +361,12 @@ class Enemy(Ship):
         # Mask for collision detection
         self.mask = pygame.mask.from_surface(self.shipImage)
         self.maxHealth = health
-    
+
     def draw(self, windowBar):
         super().draw(windowBar)
-        if(self.hit > 0 ):
+        if (self.hit > 0):
             self.healthbar(windowBar)
-        
+
     def moveDown(self, velocity):
         self.y += velocity
 
@@ -357,7 +375,7 @@ class Enemy(Ship):
             laser = Laser(self.x+23, self.y+50, self.laserImage)
             self.lasers.append(laser)
             self.laserCooldown = 1
-    
+
     def healthbar(self, windowBar):
         # Red part of health bar(missing health)
         pygame.draw.rect(windowBar, (255, 0, 0), (self.x, self.y +
@@ -365,6 +383,7 @@ class Enemy(Ship):
         # Green part of healthbar
         pygame.draw.rect(windowBar, (0, 255, 0), (self.x, self.y + self.shipImage.get_height() +
                          10, self.shipImage.get_width() * (self.health/self.maxHealth), 10))
+
 # Laser projectiles
 
 
@@ -388,38 +407,41 @@ class Laser:
         return collide(self, obj)
 
 # Power ups
+
+
 class PowerUp:
     powerUpType = {
         "heal": HEALTH_POWER,
         "damage": DAMAGE_POWER,
         "cooldown": COOLDOWN_POWER
     }
+
     def __init__(self, x, y, type):
         self.x = x
         self.y = y
         self.type = type
         self.powerImage = self.powerUpType[type]
         self.mask = pygame.mask.from_surface(self.powerImage)
-    
+
     def draw(self, window):
         window.blit(self.powerImage, (self.x, self.y))
-    
+
     def moveDown(self, velocity):
         self.y += velocity
-    
+
     def off_screen(self, height):
         return not (self.y <= height and self.y >= 0)
-    
+
     def collision(self, player):
         return collide(self, player) != None
 
     def activate(self, player):
-        if(self.collision(player) != None):
+        if (self.collision(player) != None):
             powerUpSound.play()
-            if(self.powerUpType[self.type] == HEALTH_POWER):
+            if (self.powerUpType[self.type] == HEALTH_POWER):
                 player.health = player.maxHealth
                 player.shipImage = PLAYER_SHIP
-            elif(self.powerUpType[self.type] == DAMAGE_POWER):
+            elif (self.powerUpType[self.type] == DAMAGE_POWER):
                 player.doubleLaser = True
             else:
                 player.halfCooldown = True
@@ -483,15 +505,15 @@ def main():
         "24": BACKGROUNDL24
     }
     currentLevelBackground = BACKGROUNDMAINMENU
-    
 
     clock = pygame.time.Clock()
     # Checks for changes
 
     def redraw_window():
-        WINDOW.blit(currentLevelBackground, (0,0))
+        WINDOW.blit(currentLevelBackground, (0, 0))
         # Render text
-        lives_text = gameOverFont.render(f"Lives: {player.lives}", 1, (0, 255, 0))
+        lives_text = gameOverFont.render(
+            f"Lives: {player.lives}", 1, (0, 255, 0))
         level_text = gameOverFont.render(f"Level: {level}", 1, (255, 255, 255))
         kills_text = gameOverFont.render(
             f"Total kills: {player.kills}", 1, 'orange')
@@ -503,7 +525,8 @@ def main():
                     level_text.get_width() - 20, 950))
         WINDOW.blit(kills_text, (740, 855))
         WINDOW.blit(untilNextLevel_text, (775, 890))
-        score_text = gameOverFont.render(f"Score: {player.score}", 1, (255, 255, 255))
+        score_text = gameOverFont.render(
+            f"Score: {player.score}", 1, (255, 255, 255))
         for enemy in enemies:
             enemy.draw(WINDOW)
         for power in powers:
@@ -540,31 +563,31 @@ def main():
             else:
                 continue
 
-        if win: 
-            winTime+=1
+        if win:
+            winTime += 1
             if winTime > framesPerSecond * 3:
                 run = False
-            else: 
-                if(event.type == pygame.MOUSEBUTTONDOWN):
+            else:
+                if (event.type == pygame.MOUSEBUTTONDOWN):
                     main_menu()
 
         # Start next wave of enemies after all have been killed
         if len(enemies) == 0:
-            if(level==24):
+            if (level == 24):
                 win = True
                 winTime += 1
                 winSound.play()
             else:
                 level += 1
-            if(level%5==0):
+            if (level % 5 == 0):
                 player.lives += 1
-            enemy_velocity *=1.02
-            laser_velocity_enemy *=1.01
-            player_velocity *=1.02
-            laser_velocity_player *=1.02
-            player.COOLDOWN*= 0.98
+            enemy_velocity *= 1.02
+            laser_velocity_enemy *= 1.01
+            player_velocity *= 1.02
+            laser_velocity_player *= 1.02
+            player.COOLDOWN *= 0.98
             for item in levels.keys():
-                if(level == int(item)):
+                if (level == int(item)):
                     currentLevelBackground = levels[item]
             enemyPerWave += 2
             for i in range(int(level/3)):
@@ -575,50 +598,53 @@ def main():
             levelUpSound = mixer.Sound(os.path.join(
                 "audio", "levelUp.wav"))
             levelUpSound.play()
-            
+
             # Spawn enemies
-            if(level < 3):
+            if (level < 3):
                 for i in range(enemyPerWave):
                     enemytype = random.choice(["red1", "yellow1", "green1"])
                     enemy = Enemy(random.randrange(50, window_WIDTH-100),
-                                random.randrange(-1000, -100), enemytype)
+                                  random.randrange(-1000, -100), enemytype)
                     enemies.append(enemy)
-            elif(level >= 3 and level <5):
+            elif (level >= 3 and level < 5):
                 for i in range(enemyPerWave):
-                    enemytype = random.choice(["red1", "yellow1", "blue1", "green1"])
+                    enemytype = random.choice(
+                        ["red1", "yellow1", "blue1", "green1"])
                     enemy = Enemy(random.randrange(50, window_WIDTH-100),
-                                random.randrange(-1200, -100), enemytype)
+                                  random.randrange(-1200, -100), enemytype)
                     enemies.append(enemy)
-            elif(level >= 5 and level <8):
+            elif (level >= 5 and level < 8):
                 for i in range(enemyPerWave):
-                    enemytype = random.choice(["red1", "cyan1", "yellow1", "purple1" , "blue1", "green1"])
+                    enemytype = random.choice(
+                        ["red1", "cyan1", "yellow1", "purple1", "blue1", "green1"])
                     enemy = Enemy(random.randrange(50, window_WIDTH-100),
-                                random.randrange(-1400, -100), enemytype)
+                                  random.randrange(-1400, -100), enemytype)
                     enemies.append(enemy)
-            elif(level >= 8 and level <10):
+            elif (level >= 8 and level < 10):
                 for i in range(enemyPerWave):
-                    enemytype = random.choice(["red1", "red2", "yellow1", "purple1", "purple2" , "blue1", "green1"])
+                    enemytype = random.choice(
+                        ["red1", "red2", "yellow1", "purple1", "purple2", "blue1", "green1"])
                     enemy = Enemy(random.randrange(50, window_WIDTH-100),
-                                random.randrange(-1600, -100), enemytype)
-                    if(enemytype == "purple2" or enemytype == "red2"):
+                                  random.randrange(-1600, -100), enemytype)
+                    if (enemytype == "purple2" or enemytype == "red2"):
                         enemy.health = 100
                         enemy.maxHealth = 100
                     enemies.append(enemy)
-            elif(level >= 10):
+            elif (level >= 10):
                 boss = Enemy(random.randrange(50, window_WIDTH-100),
-                                random.randrange(-1800, -100), "boss")
+                             random.randrange(-1800, -100), "boss")
                 boss.health = 500
                 boss.maxHealth = 500
                 enemies.append(boss)
                 for i in range(enemyPerWave-1):
-                    enemytype = random.choice(["red1", "red2", "yellow1", "purple1", "purple2" , "blue1", "green1"])
+                    enemytype = random.choice(
+                        ["red1", "red2", "yellow1", "purple1", "purple2", "blue1", "green1"])
                     enemy = Enemy(random.randrange(50, window_WIDTH-100),
-                                random.randrange(enemyPerWave*-85, -100), enemytype)
-                    if(enemytype == "purple2" or enemytype == "red2"):
+                                  random.randrange(enemyPerWave*-85, -100), enemytype)
+                    if (enemytype == "purple2" or enemytype == "red2"):
                         enemy.health = 100
                         enemy.maxHealth = 100
                     enemies.append(enemy)
-                
 
         # Check for input
         for event in pygame.event.get():
@@ -636,7 +662,7 @@ def main():
         if keys[pygame.K_w] and player.y - player_velocity > 0:  # Move up
             player.y -= player_velocity
             player.moving()
-        else: 
+        else:
             player.idle()
         if keys[pygame.K_s] and player.y + player_velocity + player.getHeight() + 20 < window_HEIGHT:  # Move down
             player.y += player_velocity
@@ -655,23 +681,23 @@ def main():
             if collide(enemy, player):
                 player.health -= 25
                 enemy.health -= 50
-                enemy.hit+=1
-                if(enemy.health <= 0):
+                enemy.hit += 1
+                if (enemy.health <= 0):
                     enemyKilledSound.play()
                     player.kills += 1
                     player.untilNextLevel -= 1
-                    if(enemy.maxHealth == 100):
+                    if (enemy.maxHealth == 100):
                         player.score += enemy.maxHealth
-                    elif(enemy.maxHealth == 500):
+                    elif (enemy.maxHealth == 500):
                         player.score += enemy.maxHealth
                     else:
                         player.score += enemy.maxHealth
                     enemies.remove(enemy)
-                if(player.health < 100 and player.health >= 75):
+                if (player.health < 100 and player.health >= 75):
                     player.shipImage = PLAYER_SHIP_SLIGHTDAMAGE
-                elif(player.health < 75 and player.health >= 50):
+                elif (player.health < 75 and player.health >= 50):
                     player.shipImage = PLAYER_SHIP_DAMAGED
-                elif(player.health < 50 and player.health > 0):
+                elif (player.health < 50 and player.health > 0):
                     player.shipImage = PLAYER_SHIP_VERYDAMAGED
                 else:
                     player.lives -= 1
@@ -684,7 +710,7 @@ def main():
                 lifeLostSound.play()
                 enemies.remove(enemy)
                 player.untilNextLevel -= 1
-        
+
         for power in powers[:]:
             power.moveDown(enemy_velocity)
             if collide(power, player):
